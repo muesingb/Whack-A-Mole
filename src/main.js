@@ -1,10 +1,7 @@
 let moleImageURL = "https://image.shutterstock.com/image-vector/cartoon-cute-mole-260nw-274323440.jpg"
 let moleCounter = 0
-
-let scoreCounter = 0
-
-let containter = document.querySelector(".container")
 let score = document.querySelector("span")
+let container = document.querySelector(".container")
 let clickable = false
 
 fetch('http://localhost:3000')
@@ -15,9 +12,9 @@ fetch('http://localhost:3000')
 
 //start game
 function startGame() {
-  scoreHTML.innerHTML = "0"
+  score.textContent = "0"
   
-  setInterval(function(){ molePopUp() }, 1000); //mole timing
+  setInterval(function(){ molePopUp() }, 2000);//mole timing
 
   //end game
       //render end game pop-up
@@ -42,7 +39,7 @@ function renderMole() {
   let moleHTML = `
     <img class="mole" src=${moleImageURL}>
     `
-    randomHole().insertAdjacentHTML('beforeend',moleHTML)
+    randomHole().insertAdjacentHTML('beforeend', moleHTML)
 
     moleCounter += 1
 }
@@ -54,10 +51,9 @@ function randomHole() {
 }
 
 //listen for mole click
-containter.addEventListener("click", function(e) {
+container.addEventListener("click", function(e) {
 
   if (e.target.className === "mole" && clickable) {
-    let score = document.querySelector("span")
     score.innerHTML = parseInt(score.textContent) + 1 
     clickable = false
   }

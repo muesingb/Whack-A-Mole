@@ -33,10 +33,6 @@ module WhackAMoleApi
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
-<<<<<<< HEAD
-
-=======
->>>>>>> addec288c137cb7738d2bd34f628008fba8dea5c
     config.middleware.insert_before 0, Rack::Cors do
       allow do
           origins '*'

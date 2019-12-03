@@ -1,3 +1,12 @@
+*{
+    display: flexbox;
+}
+
+/* main content */
+.main {
+    margin-left: 200px; /* Same as the width of the sidenav */
+  }
+
 .container {
     background-color: #111;
     height: 800px;
@@ -10,16 +19,10 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    width: 100vw;
-    
-    
+    width: 100vw; 
 }
 
-*{
-display: flexbox;
-}
-
- .hole {
+.hole {
     /* width: 70px; */
     /* border: 1px solid black; */
     padding: 30px;
@@ -41,7 +44,8 @@ display: flexbox;
     margin-top:0%;
     width: 50px;
 }
-  
+
+/* slide animation */
 @keyframes slide-up {
     from {
         margin-top: 100%;
@@ -52,4 +56,34 @@ display: flexbox;
         margin-top: 0%;
         height: 100%;
     }
+}
+
+/* sidebar */
+.sidenav {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+
+.sidenav p {
+    padding: 6px 6px 6px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+}
+  
+.sidenav p:hover {
+    color: #f1f1f1;
+}
+  
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav p {font-size: 18px;}
 }

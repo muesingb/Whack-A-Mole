@@ -8,7 +8,14 @@
     width: 800px;
 }
 
-#hi {
-    text-align: center;
-    color: whitesmoke;
+*{
+display: flexbox;
 }
+
+ #hole {
+    width: 70px;
+    border: 1px solid black;
+    padding: 30px;
+    margin: 10px;
+    border-radius: 50%;
+} 

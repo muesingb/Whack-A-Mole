@@ -1,13 +1,13 @@
 let moleImageURL = "https://image.shutterstock.com/image-vector/cartoon-cute-mole-260nw-274323440.jpg"
 let moleCounter = 0
-let score = document.querySelector("span")
+let score = document.querySelector("#score")
 let container = document.querySelector(".container")
 let clickable = false
 
 fetch('http://localhost:3000')
   .then(response => response.json())
   .then(data => {
-    // console.log(data)
+    console.log(data)
   })
 
 //start game
@@ -27,8 +27,7 @@ function molePopUp() {
     renderMole()
     } else {
       renderMole()
-
-      }
+    }
 }
 
 //mole render

@@ -3,6 +3,8 @@ let moleCounter = 0
 let score = document.querySelector("#score")
 let container = document.querySelector(".container")
 let clickable = false
+let timer = 0
+let startButton = document.querySelector('#start-button')
 
 fetch('http://localhost:3000')
   .then(response => response.json())
@@ -11,24 +13,37 @@ fetch('http://localhost:3000')
   })
 
 //start game
+let interval;
 function startGame() {
   score.textContent = "0"
-  
-  setInterval(function(){ molePopUp() }, 2000);//mole timing
-
-  //end game
-      //render end game pop-up
-      //send post request with users name and score to backend
+  interval = setInterval(function(){ molePopUp() }, 1000);//mole timing
 };
 
 function molePopUp() {
-  if (document.querySelector('.mole')) {
-    document.querySelector('.mole').remove()
-    renderMole()
-    } else {
+  //can do Date.now() and see what difference is
+  if (timer < 5) {
+    if (document.querySelector('.mole')) {
+      removeMole()
       renderMole()
-    }
-}
+      } else {
+        renderMole()
+      }
+      timer++
+  } else {
+      endGame()
+  }
+};
+
+//end game function
+function endGame() {
+  timer = 0
+  clearInterval(interval)
+  if (document.querySelector('.mole')) {removeMole()}
+  console.log(score)
+  //end game
+    //render end game screen
+    //send post/patch request to back end
+ };
 
 //mole render
 function renderMole() {
@@ -53,16 +68,18 @@ function randomHole() {
 container.addEventListener("click", function(e) {
 
   if (e.target.className === "mole" && clickable) {
-    score.innerHTML = parseInt(score.textContent) + 1 
+    score.innerHTML = parseInt(score.textContent) + 1
+    removeMole()
     clickable = false
   }
-  
 })
 
-//incomplete event listener for ending game
-document.addEventListener('DOMContentLoaded', function(event) {
-  if (moleCounter >= 10) {
-    clearInterval()
-    moleCounter = 0
-  }
-})
+//event listener for start game button
+startButton.addEventListener('click', function(event) {
+  startGame()
+});
+
+//helper function remove mole
+function removeMole() {
+  document.querySelector('.mole').remove()
+};

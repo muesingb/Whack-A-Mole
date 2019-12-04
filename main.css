@@ -8,13 +8,11 @@
   }
 
 .container {
-    background-color: #111;
-    height: 800px;
+    height: 820px;
     margin: 0 auto;
     overflow: hidden;
     position: relative;
     text-align: center;
-    /* width: 800px; */
 
     display: flex;
     flex-direction: row;
@@ -23,38 +21,45 @@
 }
 
 .hole {
-    /* width: 70px; */
-    /* border: 1px solid black; */
     padding: 30px;
-    /* margin: 10px; */
-    /* border-radius: 50%; */
-    background-color: white;
+    background-color: #3cad37;
     overflow:hidden;
 
-    height: 200px;
-    width: 30px;
+    height: 210px;
+    width: 220px;
     border: 1px solid red;
-    border-radius: 50%;
+    /* border-radius: 50%; */
     flex-basis: 30vw;
-    margin: 1vw;
+    /* margin: 1vw; */
+
+    display: flex;
+    align-items: center;
+    z-index: 1;
+}
+
+.image-hole {
+    z-index: 2;
 }
 
 .mole {
-    animation: 1s slide-up;
-    margin-top:0%;
+    animation: 1.5s slide-up;
+    margin-top: 0%;
     width: 50px;
+    position: relative;
+    right: 60%;
+    z-index: 1;
 }
 
 /* slide animation */
 @keyframes slide-up {
     from {
         margin-top: 100%;
-        height: 300%; 
+        /* height: 100%;  */
     }
 
     to {
         margin-top: 0%;
-        height: 100%;
+        /* height: 100%; */
     }
 }
 
@@ -75,15 +80,42 @@
     padding: 6px 6px 6px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #818181;
+    color: #f1f1f1;
     display: block;
 }
   
 .sidenav p:hover {
-    color: #f1f1f1;
+    color: #818181;
 }
   
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav p {font-size: 18px;}
+}
+
+#header{
+    text-align: center;
+}
+
+/* button */
+#start-button {
+	box-shadow: 0px 0px 11px 0px #9fb4f2;
+	background-color:#7892c2;
+	border-radius:30px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Verdana;
+	font-size:19px;
+	font-weight:bold;
+	padding:3px 25px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #283966;
+}
+#start-button:hover {
+	background-color:#476e9e;
+}
+#start-button:active {
+	position:relative;
+	top:1px;
 }

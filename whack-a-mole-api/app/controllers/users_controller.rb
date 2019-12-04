@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     end
  
     def create
-        @user = User.new(filter_params)
+        @user = User.find_or_create_by(filter_params)
         if @user.save
             # session[user_id] = @user.id
             render json: @user

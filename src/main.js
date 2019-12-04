@@ -110,7 +110,7 @@ function renderMole() {
     <img class="mole" src=${moleImageURL}>
     `
     randomHole().insertAdjacentHTML('beforeend', moleHTML)
-
+    
     moleCounter += 1
 };
 

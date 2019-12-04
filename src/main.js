@@ -6,6 +6,9 @@ let clickableMole = false
 let startButton = document.querySelector('#start-button')
 let timer = 30
 let countdownTimer = document.querySelector('#countdown-timer')
+let playAgainButton = document.querySelector('#play-again-button')
+let modal = document.querySelector('#EndGameModal')
+let modalContent = document.querySelector('.modal-content')
 
 //fetch get request to rails api
 fetch('http://localhost:3000')
@@ -45,10 +48,10 @@ function endGame() {
   clearInterval(timerInterval)
   clearInterval(interval)
   if (document.querySelector('.mole')) {removeMole()}
-  toggleStartButton()
+  //toggleStartButton()
+  renderEndGame()
   console.log(parseInt(scoreSelector.textContent))
   //end game
-    //render end game screen
     //send post/patch request to back end
  };
 
@@ -60,6 +63,7 @@ function timerCountdown() {
       } else if (timer >= 0) {
         newTime = ("00:0" + timer.toString())
       }
+      if (timer === 1) {console.log(timer)}
       countdownTimer.innerText = newTime
       timer--
 };
@@ -90,6 +94,31 @@ startButton.addEventListener('click', function(event) {
   toggleStartButton()
 });
 
+/** ~~~~~~~~~~~~~End Game Modal ~~~~~~~~~~~~~~*/
+function renderEndGame() {
+  modal.style.display = "block"
+  modalContent.innerHTML = ""
+  let endGameHTML = `
+    <h1>Thanks for Playing!</h1>
+    <p>Score: ${parseInt(scoreSelector.textContent)}</p>
+    <p>High Score:</p>
+    <button class="button" id="play-again-button">Play Again?</button>
+  `
+  modalContent.insertAdjacentHTML('beforeend', endGameHTML)
+
+  //if user clicks off of modal, it closes the modal
+  document.addEventListener('click', function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+      toggleStartButton();
+    } else if (event.target.className === "button") {
+        modal.style.display = "none";
+        startGame()
+        //toggleStartButton()
+    }
+  })
+}
+
 /** ~~~~~~~~~~~~~~~HELPER FUNCTIONS~~~~~~~~~~~~~~~~ */
 
 //show or hide start button
@@ -110,7 +139,7 @@ function renderMole() {
     <img class="mole" src=${moleImageURL}>
     `
     randomHole().insertAdjacentHTML('beforeend', moleHTML)
-    
+
     moleCounter += 1
 };
 

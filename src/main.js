@@ -9,8 +9,10 @@ let countdownTimer = document.querySelector('#countdown-timer')
 let playAgainButton = document.querySelector('#play-again-button')
 let EndGameModal = document.querySelector('#EndGameModal')
 let HomeScreenModal = document.querySelector('#HomeScreenModal')
+let leaderboardModal = document.querySelector('#leaderboardModal')
 let EndGameModalContent = document.querySelector("#EndGameModalContent")
 let HomeScreenModalContent = document.querySelector("#HomeScreenModalContent")
+let leaderboardModalContent = document.querySelector("#leaderboardModalContent")
 let gameInfo = document.querySelector('#info')
 
 //fetch get request to rails api
@@ -21,7 +23,6 @@ fetch('http://localhost:3000/users')
   });
 
 //start game
-//renderHomeScreen() //load page with home screen modal
 let timerInterval;
 let interval;
 function startGame() {
@@ -100,25 +101,12 @@ startButton.addEventListener('click', function(event) {
 });
 
 /** ~~~~~~~~~~~~~Home Screen Modal ~~~~~~~~~~~~ */
-function renderHomeScreen() {
-  HomeScreenModal.style.display = "block"
-  HomeScreenModalContent.innerHTML = ""
-  let HomeScreenHTML = `
-    <h1>Welcome to Whack-a-mole!</h1>
-    <form>
-      Username:<br>
-      <input type="text" name="username"><br>
-      <input class="submit" type="submit" value="Submit">
-    </form>
-  `
-  HomeScreenModalContent.insertAdjacentHTML('beforeend', HomeScreenHTML)
-
-  document.addEventListener('click', function(event) {
-    if (event.target.className === "submit") {
-        HomeScreenModal.style.display = "none";
-    }
-  })
-}
+document.addEventListener('click', function(event) {
+  if (event.target.className === "submit") {
+      HomeScreenModal.style.display = "none";
+      HomeScreenModalContent.innerHTML = "";
+  }
+})
 
 /** ~~~~~~~~~~~~~End Game Modal ~~~~~~~~~~~~~~*/
 function renderEndGame() {
@@ -136,17 +124,37 @@ function renderEndGame() {
   
   document.addEventListener('click', function(event) {
     //if user clicks off of modal, it closes the modal
-    // if (event.target == modal) {
+    // if (event.target == EndGameModal) {
     //   modal.style.display = "none";
     //   toggleStartButton();
-    // } else 
-    console.log(event.target)
-    if (event.target.className === "button") { //if user hits play-again, starts a new game
+    // } else
+    if (event.target.id === "play-again-button") { //if user hits play-again, starts a new game
         EndGameModal.style.display = "none";
+        startGame()
+    } else if (event.target.id === "leaderboard-button") {
+      EndGameModal.style.display = "none";
+      renderLeaderboard()
+    }
+  })
+};
+
+/** ~~~~~~~~~~~~~~~Leaderboard Modal~~~~~~~~~~~~~~~ */
+function renderLeaderboard() {
+  leaderboardModal.style.display = "block"
+  leaderboardModalContent.innerHTML = ""
+  let leaderboardHTML = `
+    <h1>LeaderBoard</h1>
+    <button class="button" id="play-again-button">Play Again?</button>
+  `
+  leaderboardModalContent.insertAdjacentHTML('beforeend', leaderboardHTML)
+
+  document.addEventListener('click', function(event) {
+    if (event.target.className === "button") { //if user hits play-again, starts a new game
+        leaderboardModal.style.display = "none";
         startGame()
     }
   })
-}
+};
 
 /** ~~~~~~~~~~~~~~~HELPER FUNCTIONS~~~~~~~~~~~~~~~~ */
 

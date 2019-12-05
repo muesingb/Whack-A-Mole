@@ -14,7 +14,9 @@ let EndGameModalContent = document.querySelector("#EndGameModalContent")
 let HomeScreenModalContent = document.querySelector("#HomeScreenModalContent")
 let leaderboardModalContent = document.querySelector("#leaderboardModalContent")
 let gameInfo = document.querySelector('#info')
-
+let form = document.querySelector(".form")
+let homeS = document.querySelector("#HomeScreenModal")
+let userId= 0;
 //fetch get request to rails api
 fetch('http://localhost:3000/users')
   .then(response => response.json())
@@ -49,17 +51,37 @@ function molePopUp() {
 
 //end game function
 function endGame() {
+  updateScore()
   timer = 10
   clearInterval(timerInterval)
   clearInterval(interval)
   if (document.querySelector('.mole')) {removeMole()}
   //toggleStartButton()
   renderEndGame()
-  console.log(parseInt(scoreSelector.textContent))
+  // console.log(parseInt(scoreSelector.textContent))
   //end game
     //send post/patch request to back end
  };
 
+ // create score with relation to user <post request>
+ function updateScore() {
+   
+   fetch("http://localhost:3000/games", {
+     method: "POST",
+     headers: {
+      "Content-Type": "application/json",
+      Accepete: "application/json" 
+     },
+    body: JSON.stringify({
+      user_id: userId,
+      score: parseInt(scoreSelector.textContent)   })     })
+    .then(function(resp) {
+      return resp.json();   })
+    .then(function(data) {
+    renderEndGame()
+  
+    })
+ }
 //timer countdown
 function timerCountdown() {
       let newTime;
@@ -204,3 +226,25 @@ function toggleStartButton() {
 function InfoToggleOn() {
   gameInfo.style.display = "block"
 }
+
+//post request to create new user
+form.addEventListener("submit", function(e) {
+  let username = document.querySelector("#username")
+  e.preventDefault()
+
+  fetch("http://localhost:3000/users",{
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accepete: "application/json" },
+    body: JSON.stringify({
+     username: e.target[0].value  })
+   })
+   .then(function(resp) {
+     return resp.json();    })
+   .then(function(data) {
+    homeS.remove()
+    userId = data.id
+    username.innerHTML = e.target[0].value
+   })
+})

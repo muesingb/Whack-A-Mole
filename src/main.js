@@ -6,6 +6,7 @@ let clickableMole = false
 let startButton = document.querySelector('#start-button')
 let timer = 10
 let countdownTimer = document.querySelector('#countdown-timer')
+let leaders = document.querySelector("#leaderboard-button")
 let playAgainButton = document.querySelector('#play-again-button')
 let EndGameModal = document.querySelector('#EndGameModal')
 let HomeScreenModal = document.querySelector('#HomeScreenModal')
@@ -17,11 +18,17 @@ let gameInfo = document.querySelector('#info')
 let form = document.querySelector(".form")
 let homeS = document.querySelector("#HomeScreenModal")
 let userId= 0;
+let names = [] ;
+
+
+
+
+
 //fetch get request to rails api
 fetch('http://localhost:3000/users')
   .then(response => response.json())
   .then(data => {
-    console.log(data)
+    // console.log(data)
   });
 
 //start game
@@ -58,9 +65,6 @@ function endGame() {
   if (document.querySelector('.mole')) {removeMole()}
   //toggleStartButton()
   renderEndGame()
-  // console.log(parseInt(scoreSelector.textContent))
-  //end game
-    //send post/patch request to back end
  };
 
  // create score with relation to user <post request>
@@ -162,13 +166,21 @@ function renderEndGame() {
 
 /** ~~~~~~~~~~~~~~~Leaderboard Modal~~~~~~~~~~~~~~~ */
 function renderLeaderboard() {
+  console.log(names)
   leaderboardModal.style.display = "block"
   leaderboardModalContent.innerHTML = ""
-  let leaderboardHTML = `
-    <h1>LeaderBoard</h1>
-    <button class="button" id="play-again-button">Play Again?</button>
-  `
+  let leaderboardHTML = 
+  // <h1>LeaderBoard</h1>
+  // <ul>
+  
+  // </ul>
+  // <button class="button" id="play-again-button">Play Again?</button>
+  
   leaderboardModalContent.insertAdjacentHTML('beforeend', leaderboardHTML)
+    for (const name of names) {
+                    
+  }
+  
 
   document.addEventListener('click', function(event) {
     if (event.target.className === "button") { //if user hits play-again, starts a new game
@@ -247,4 +259,21 @@ form.addEventListener("submit", function(e) {
     userId = data.id
     username.innerHTML = e.target[0].value
    })
+})
+
+fetch("http://localhost:3000/games")
+.then(function(resp) {
+  return resp.json();   })
+.then(function(data) {
+  for (const obj of data) {
+    let id = obj.user_id
+    fetch(`http://localhost:3000/users/${id}`)
+    .then(function(resp) {
+      return resp.json();   })
+    .then(function(data) {
+      // console.log(data.username);
+      names.push(data.username)
+    })
+  }
+  
 })

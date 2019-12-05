@@ -1,9 +1,10 @@
 class GamesController < ApplicationController
 
     def index 
-        games = Game.all 
+        games = Game.top_five 
         render json: games
     end
+ 
     def create
         @game = Game.find_or_create_by(filter_params)
 

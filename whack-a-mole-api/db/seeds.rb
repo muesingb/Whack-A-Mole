@@ -7,4 +7,4 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 user1 = User.create(username: "Barbara")
 user2 = User.create(username: "Soufiane")
-user3 = User.create(username: "default user")
+user3 = User.create(username: "default")

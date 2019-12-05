@@ -14,25 +14,26 @@
 <body>
     <header><h1 id="header">Whack-a-mole!!</h1></header>
     <div class="sidenav">
-        <div id="info">
-            <button class="button" id="start-button">Start Game?</button>         
+        <button class="button" id="start-button">Start Game?</button>
+        <div id="info">         
             <p>Time left</p>
             <p id="countdown-timer">00:30</p>
-            </div>
-            <div>
-                <p>Score</p>
-                <p id="score"></p>
-            </div>
-            <div>
-                <p>User</p>
-                <p id="username"></p>
-            </div>
+            <p>Score</p>
+            <p id="score"></p>
+        </div>
+        <div id="user">
+            <p>User</p>
+            <p id="username"></p>
         </div>
     </div>
     <div class="main">
             <div id="EndGameModal" class="modal">
-                    <div class="modal-content">
-                    <!-- <span class="close">&times;</span> -->
+                    <div class="modal-content" id="EndGameModalContent">
+                    </div>
+                </div>
+            <div>
+            <div id="HomeScreenModal" class="modal">
+                    <div class="modal-content" id="HomeScreenModalContent">
                     </div>
                 </div>
             <div>

@@ -4,14 +4,19 @@ let scoreSelector = document.querySelector("#score")
 let container = document.querySelector(".container")
 let clickableMole = false
 let startButton = document.querySelector('#start-button')
-let timer = 30
+let timer = 10
 let countdownTimer = document.querySelector('#countdown-timer')
 let playAgainButton = document.querySelector('#play-again-button')
-let modal = document.querySelector('#EndGameModal')
-let modalContent = document.querySelector('.modal-content')
+let EndGameModal = document.querySelector('#EndGameModal')
+let HomeScreenModal = document.querySelector('#HomeScreenModal')
+let leaderboardModal = document.querySelector('#leaderboardModal')
+let EndGameModalContent = document.querySelector("#EndGameModalContent")
+let HomeScreenModalContent = document.querySelector("#HomeScreenModalContent")
+let leaderboardModalContent = document.querySelector("#leaderboardModalContent")
+let gameInfo = document.querySelector('#info')
 
 //fetch get request to rails api
-fetch('http://localhost:3000')
+fetch('http://localhost:3000/users')
   .then(response => response.json())
   .then(data => {
     console.log(data)
@@ -44,7 +49,7 @@ function molePopUp() {
 
 //end game function
 function endGame() {
-  timer = 30
+  timer = 10
   clearInterval(timerInterval)
   clearInterval(interval)
   if (document.querySelector('.mole')) {removeMole()}
@@ -91,33 +96,65 @@ container.addEventListener("click", function(e) {
 //event listener for start game button
 startButton.addEventListener('click', function(event) {
   startGame()
+  InfoToggleOn()
   toggleStartButton()
 });
 
+/** ~~~~~~~~~~~~~Home Screen Modal ~~~~~~~~~~~~ */
+document.addEventListener('click', function(event) {
+  if (event.target.className === "submit") {
+      HomeScreenModal.style.display = "none";
+      HomeScreenModalContent.innerHTML = "";
+  }
+})
+
 /** ~~~~~~~~~~~~~End Game Modal ~~~~~~~~~~~~~~*/
 function renderEndGame() {
-  modal.style.display = "block"
-  modalContent.innerHTML = ""
+  EndGameModal.style.display = "block"
+  EndGameModalContent.innerHTML = ""
   let endGameHTML = `
     <h1>Thanks for Playing!</h1>
     <p>Score: ${parseInt(scoreSelector.textContent)}</p>
     <p>High Score:</p>
     <button class="button" id="play-again-button">Play Again?</button>
+    <button class="button" id="leaderboard-button">Leaderboard</button>
   `
-  modalContent.insertAdjacentHTML('beforeend', endGameHTML)
+  EndGameModalContent.insertAdjacentHTML('beforeend', endGameHTML)
 
-  //if user clicks off of modal, it closes the modal
+  
   document.addEventListener('click', function(event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-      toggleStartButton();
-    } else if (event.target.className === "button") {
-        modal.style.display = "none";
+    //if user clicks off of modal, it closes the modal
+    // if (event.target == EndGameModal) {
+    //   modal.style.display = "none";
+    //   toggleStartButton();
+    // } else
+    if (event.target.id === "play-again-button") { //if user hits play-again, starts a new game
+        EndGameModal.style.display = "none";
         startGame()
-        //toggleStartButton()
+    } else if (event.target.id === "leaderboard-button") {
+      EndGameModal.style.display = "none";
+      renderLeaderboard()
     }
   })
-}
+};
+
+/** ~~~~~~~~~~~~~~~Leaderboard Modal~~~~~~~~~~~~~~~ */
+function renderLeaderboard() {
+  leaderboardModal.style.display = "block"
+  leaderboardModalContent.innerHTML = ""
+  let leaderboardHTML = `
+    <h1>LeaderBoard</h1>
+    <button class="button" id="play-again-button">Play Again?</button>
+  `
+  leaderboardModalContent.insertAdjacentHTML('beforeend', leaderboardHTML)
+
+  document.addEventListener('click', function(event) {
+    if (event.target.className === "button") { //if user hits play-again, starts a new game
+        leaderboardModal.style.display = "none";
+        startGame()
+    }
+  })
+};
 
 /** ~~~~~~~~~~~~~~~HELPER FUNCTIONS~~~~~~~~~~~~~~~~ */
 
@@ -153,3 +190,17 @@ function randomHole() {
 function removeMole() {
   document.querySelector('.mole').remove()
 };
+
+//show or hide start button
+function toggleStartButton() {
+  if (startButton.style.display === "none") {
+    startButton.style.display = "block";
+  } else {
+    startButton.style.display = "none";
+  }
+};
+
+//show hidden timer and score information
+function InfoToggleOn() {
+  gameInfo.style.display = "block"
+}

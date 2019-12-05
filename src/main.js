@@ -120,23 +120,18 @@ function renderEndGame() {
     <button class="button" id="leaderboard-button">Leaderboard</button>
   `
   EndGameModalContent.insertAdjacentHTML('beforeend', endGameHTML)
-
-  
-  document.addEventListener('click', function(event) {
-    //if user clicks off of modal, it closes the modal
-    // if (event.target == EndGameModal) {
-    //   modal.style.display = "none";
-    //   toggleStartButton();
-    // } else
-    if (event.target.id === "play-again-button") { //if user hits play-again, starts a new game
-        EndGameModal.style.display = "none";
-        startGame()
-    } else if (event.target.id === "leaderboard-button") {
-      EndGameModal.style.display = "none";
-      renderLeaderboard()
-    }
-  })
 };
+//event listener for both play again button and leaderboard button
+document.addEventListener('click', function(event) {
+  if (event.target.id === "play-again-button") { //if user hits play-again, starts a new game
+      EndGameModal.style.display = "none";
+      leaderboardModal.style.display = "none";
+      startGame()
+  } else if (event.target.id === "leaderboard-button") {
+    EndGameModal.style.display = "none";
+    renderLeaderboard()
+  }
+});
 
 /** ~~~~~~~~~~~~~~~Leaderboard Modal~~~~~~~~~~~~~~~ */
 function renderLeaderboard() {
@@ -147,13 +142,6 @@ function renderLeaderboard() {
     <button class="button" id="play-again-button">Play Again?</button>
   `
   leaderboardModalContent.insertAdjacentHTML('beforeend', leaderboardHTML)
-
-  document.addEventListener('click', function(event) {
-    if (event.target.className === "button") { //if user hits play-again, starts a new game
-        leaderboardModal.style.display = "none";
-        startGame()
-    }
-  })
 };
 
 /** ~~~~~~~~~~~~~~~HELPER FUNCTIONS~~~~~~~~~~~~~~~~ */

@@ -15,8 +15,8 @@ let HomeScreenModalContent = document.querySelector("#HomeScreenModalContent")
 let leaderboardModalContent = document.querySelector("#leaderboardModalContent")
 let gameInfo = document.querySelector('#info')
 let form = document.querySelector(".form")
-let homeS = document.querySelector("#HomeScreenModal")
 let userId= 0;
+
 //fetch get request to rails api
 fetch('http://localhost:3000/users')
   .then(response => response.json())
@@ -122,22 +122,14 @@ startButton.addEventListener('click', function(event) {
   toggleStartButton()
 });
 
-/** ~~~~~~~~~~~~~Home Screen Modal ~~~~~~~~~~~~ */
-document.addEventListener('click', function(event) {
-  if (event.target.className === "submit") {
-      HomeScreenModal.style.display = "none";
-      HomeScreenModalContent.innerHTML = "";
-  }
-})
-
 /** ~~~~~~~~~~~~~End Game Modal ~~~~~~~~~~~~~~*/
 function renderEndGame() {
   EndGameModal.style.display = "block"
   EndGameModalContent.innerHTML = ""
   let endGameHTML = `
-    <h1>Thanks for Playing!</h1>
-    <p>Score: ${parseInt(scoreSelector.textContent)}</p>
-    <p>High Score:</p>
+    <h1 id="">Thanks for Playing!</h1>
+    <p>Score: <span style="font-weight: bold;">${parseInt(scoreSelector.textContent)}</span></p>
+    <p>Your High Score:<span style="font-weight: bold;"></span></p>
     <button class="button" id="play-again-button">Play Again?</button>
     <button class="button" id="leaderboard-button">Leaderboard</button>
   `
@@ -158,12 +150,6 @@ document.addEventListener('click', function(event) {
 /** ~~~~~~~~~~~~~~~Leaderboard Modal~~~~~~~~~~~~~~~ */
 function renderLeaderboard() {
   leaderboardModal.style.display = "block"
-  leaderboardModalContent.innerHTML = ""
-  let leaderboardHTML = `
-    <h1>LeaderBoard</h1>
-    <button class="button" id="play-again-button">Play Again?</button>
-  `
-  leaderboardModalContent.insertAdjacentHTML('beforeend', leaderboardHTML)
 };
 
 /** ~~~~~~~~~~~~~~~HELPER FUNCTIONS~~~~~~~~~~~~~~~~ */
@@ -213,6 +199,13 @@ function toggleStartButton() {
 //show hidden timer and score information
 function InfoToggleOn() {
   gameInfo.style.display = "block"
+};
+
+//function to clear home screen model
+function clearHomeScreenModal() {
+  startButton.style.display = "block";
+  HomeScreenModal.style.display = "none";
+  HomeScreenModalContent.innerHTML = "";
 }
 
 //post request to create new user
@@ -231,7 +224,8 @@ form.addEventListener("submit", function(e) {
    .then(function(resp) {
      return resp.json();    })
    .then(function(data) {
-    homeS.remove()
+    toggleStartButton()
+    clearHomeScreenModal()
     userId = data.id
     username.innerHTML = e.target[0].value
    })

@@ -8,33 +8,32 @@
     <link rel="stylesheet" type="text/css" href="./css/modal.css">
     <link rel="stylesheet" type="text/css" href="./css/button.css">
     <link rel="stylesheet" type="text/css" href="./css/sidebar.css">
+    <link rel="stylesheet" type="text/css" href="./css/rainbow.css">
     <script defer type="text/javascript" src='src/main.js'></script>
-    <title>Whack-a-mole</title>
+    <title>Whacky-mole!</title>
 </head>
 <body>
-    <header><h1 id="header">Whack-a-mole!!</h1></header>
     <div class="sidenav">
         <button class="button" id="start-button">Start Game?</button>
-        <div id="info">         
-            <p>Time left</p>
+        <div id="info">
+            <h1 class="rainbow">Hit the Mole!</h1>         
+            <p>Time Left</p>
             <p id="countdown-timer">00:30</p>
             <p>Score</p>
             <p id="score"></p>
+            <p>Logged in as:</p>
         </div>
         <div id="user">
-            <p>User</p>
             <p id="username"></p>
         </div>
     </div>
     <div class="main">
             <div id="HomeScreenModal" class="modal" style="display: block;">
                     <div class="modal-content" id="HomeScreenModalContent">
-                        <h1>Welcome to Whack-a-mole!</h1>
-                        <form  action="" class="form">
-                            <!-- Username:<br> -->
-                            <input type="text" name="username"><br>
-                            <!-- <input button="submit" value="Submit" class="submit"> -->
-                            <button type="submit">Create</button>
+                        <h1 class="rainbow">Welcome to Whacky-mole!</h1>
+                        <form action="" class="form">
+                            <input style="border: 4px solid red; border-radius: 4px; padding: 5px; margin: 10px; font-weight: bold; font-size: 20px; text-align: center;" id="input" type="text" name="username"><br>
+                            <button class="button" type="submit">Enter Name</button>
                         </form>
                     </div>
                 </div>
@@ -46,6 +45,8 @@
             <div>
             <div id="leaderboardModal" class="modal">
                     <div class="modal-content" id="leaderboardModalContent">
+                        <h1 class="rainbow">LeaderBoard</h1>
+                        <button class="button" id="play-again-button">Play Again?</button>
                     </div>
                 </div>
             <div>

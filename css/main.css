@@ -22,32 +22,58 @@
 
 .hole {
     padding: 30px;
-    background-color: #3cad37;
+    background-color: #98C312;
     overflow:hidden;
 
     height: 210px;
     width: 220px;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     /* border-radius: 50%; */
     flex-basis: 30vw;
     /* margin: 1vw; */
 
     display: flex;
     align-items: center;
-    /* z-index: 1; */
+    z-index: 1;
+
+    background-image: url('./../whackamole\ background.png');
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .image-hole {
-    /* z-index: 2; */
+    z-index: 1;
+    position: relative;
+    height: 40%;
+    width: 150%;
+    top: 100px;
+    right: 60px;
+}
+
+.image-hole-top {
+    z-index: 2;
+    margin-top: 0%;
+    width: 255px;
+    position: relative;
+    right: 225%;
+    top: 15%;
+}
+
+#image-hole-test {
+    position: relative;
+    height: 40%;
+    width: 150%;
+    top: 100px;
+    right: 60px;
 }
 
 .mole {
     animation: 1.5s slide-up;
-    margin-top: 0%;
-    width: 50px;
+    margin-top: -35%;
+    width: 150px;
     position: relative;
-    right: 60%;
-    /* z-index: 1; */
+    right: 130%;
+    z-index: 0;
 }
 
 /* slide animation */
@@ -58,7 +84,7 @@
     }
 
     to {
-        margin-top: 0%;
+        margin-top: -40%;
         /* height: 100%; */
     }
 }

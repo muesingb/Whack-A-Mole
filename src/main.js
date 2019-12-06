@@ -36,7 +36,7 @@ let timerInterval;
 let interval;
 function startGame() {
   scoreSelector.textContent = "0"
-  interval = setInterval(function(){ molePopUp() }, 3000);//mole timing
+  interval = setInterval(function(){ molePopUp() }, 500);//mole timing
   timerInterval = setInterval(function(){ timerCountdown() }, 1000);// game countdown
 };
 
@@ -164,24 +164,18 @@ function renderEndGame() {
   })
 };
 
+let ul = document.querySelector(".list")
 /** ~~~~~~~~~~~~~~~Leaderboard Modal~~~~~~~~~~~~~~~ */
+ function createList() {
+   for (const name of names) {
+   ul.innerHTML += `<li>${name}</li>`
+   }
+ }
 function renderLeaderboard() {
   console.log(names)
   leaderboardModal.style.display = "block"
-  leaderboardModalContent.innerHTML = ""
-  let leaderboardHTML = 
-  // <h1>LeaderBoard</h1>
-  // <ul>
+  createList()
   
-  // </ul>
-  // <button class="button" id="play-again-button">Play Again?</button>
-  
-  leaderboardModalContent.insertAdjacentHTML('beforeend', leaderboardHTML)
-    for (const name of names) {
-                    
-  }
-  
-
   document.addEventListener('click', function(event) {
     if (event.target.className === "button") { //if user hits play-again, starts a new game
         leaderboardModal.style.display = "none";

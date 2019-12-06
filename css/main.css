@@ -17,6 +17,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     width: 100vw; 
+    cursor: url('./../red\ darkness\ final.png'), auto;
 }
 
 .hole {

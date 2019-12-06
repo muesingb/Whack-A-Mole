@@ -1,4 +1,6 @@
-let moleImageURL = './red\ darkness\ final.png'
+let moleImageURL = './yoan\ 3.png'
+let moleImageURL2 = './red\ darkness\ final.png'
+let moleImageURL3 = './caryn.png'
 let moleCounter = 0
 let scoreSelector = document.querySelector("#score")
 let container = document.querySelector(".container")
@@ -176,7 +178,7 @@ function renderMole() {
   clickableMole = true
   randomHole()
   let moleHTML = `
-    <img class="mole" src="${moleImageURL}">
+    <img class="mole" src="${pickMole()}">
     <img class="image-hole-top" src="whack-a-mole-top.png">
     `
     randomHole().insertAdjacentHTML('beforeend', moleHTML)
@@ -190,7 +192,12 @@ function randomHole() {
   return document.querySelector(`[data-id="${holeID}"]`)
 };
 
-//function for randomMole
+//function for pickMole
+function pickMole() {
+  moleArray = [moleImageURL, moleImageURL2, moleImageURL3]
+  let moleIDIndex = Math.floor(Math.random() * 3)
+  return moleArray[moleIDIndex]
+}
 
 //remove mole
 function removeMole() {

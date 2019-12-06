@@ -17,8 +17,8 @@ let leaderboardModalContent = document.querySelector("#leaderboardModalContent")
 let gameInfo = document.querySelector('#info')
 let form = document.querySelector(".form")
 let userId= 0;
-let names = [] ;
-
+let names =[]
+let hightScore = 0;
 
 
 //start game
@@ -26,7 +26,7 @@ let timerInterval;
 let interval;
 function startGame() {
   scoreSelector.textContent = "0"
-  interval = setInterval(function(){ molePopUp() }, 500);//mole timing
+  interval = setInterval(function(){ molePopUp() }, 1000);//mole timing
   timerInterval = setInterval(function(){ timerCountdown() }, 1000);// game countdown
 };
 
@@ -76,6 +76,8 @@ function endGame() {
   
     })
  }
+
+
 //timer countdown
 function timerCountdown() {
       let newTime;
@@ -142,14 +144,17 @@ document.addEventListener('click', function(event) {
 });
 
 let ul = document.querySelector(".list")
-/** ~~~~~~~~~~~~~~~Leaderboard Modal~~~~~~~~~~~~~~~ */
- function createList() {
-   for (const name of names) {
-   ul.innerHTML += `<li>${name}</li>`
-   }
- }
+
+// /** ~~~~~~~~~~~~~~~Leaderboard Modal~~~~~~~~~~~~~~~ */
+//  function createList() {
+//    let arr = names.reverse()
+//    for (const name of arr) {
+//     console.log(name);
+//    ul.innerHTML += `<p>${name.username} : ${name.score}</p>`
+//    }
+//  }
 function renderLeaderboard() {
-  console.log(names)
+  // console.log(names)
   leaderboardModal.style.display = "block"
   createList()
   document.addEventListener('click', function(event) {
@@ -158,8 +163,6 @@ function renderLeaderboard() {
         startGame()
     }
   })
-
-
 };
 
 /** ~~~~~~~~~~~~~~~HELPER FUNCTIONS~~~~~~~~~~~~~~~~ */
@@ -245,19 +248,63 @@ form.addEventListener("submit", function(e) {
    })
 })
 
-fetch("http://localhost:3000/games")
+// post request to get user_id for for each game
+// fetch("http://localhost:3000/games")
+// .then(function(resp) {
+//   return resp.json();   })
+// .then(function(data) {
+//   console.log(data);
+  
+//   for (const obj of data) {
+//     let id = obj.user_id
+//     let objScore = obj.score
+//     fetch(`http://localhost:3000/users/${id}`)
+//     .then(function(resp) {
+//       return resp.json();   })
+//     .then(function(data) {
+//       // console.log(data);
+//       // names.push(data.username)
+//       // let username = data.username
+//       let elements = {} ;
+//       elements.id = id
+//       elements.username = data.username
+//       elements.score = objScore
+//       names.push(elements)
+//     })
+//   }
+// })
+
+fetch("http://localhost:3000/users")
 .then(function(resp) {
-  return resp.json();   })
+  return resp.json();
+})
 .then(function(data) {
+  console.log(data);
   for (const obj of data) {
     let id = obj.user_id
+    let objScore = obj.score
     fetch(`http://localhost:3000/users/${id}`)
     .then(function(resp) {
       return resp.json();   })
     .then(function(data) {
-      // console.log(data.username);
-      names.push(data.username)
+      // console.log(data);
+      // names.push(data.username)
+      // let username = data.username
+      let elements = {} ;
+      elements.id = id
+      elements.username = data.username
+      elements.score = objScore
+      names.push(elements)
     })
   }
-  
 })
+
+
+/** ~~~~~~~~~~~~~~~Leaderboard Modal~~~~~~~~~~~~~~~ */
+ function createList() {
+   let arr = names.reverse()
+   for (const name of arr) {
+    console.log(name);
+   ul.innerHTML += `<p>${name.username} : ${name.score}</p>`
+   }
+ }

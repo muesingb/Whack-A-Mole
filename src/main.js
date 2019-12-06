@@ -1,4 +1,6 @@
-let moleImageURL = './xxRedDarknessxx\ 2.png'
+let moleImageURL = './yoan\ 3.png'
+let moleImageURL2 = './red\ darkness\ final.png'
+let moleImageURL3 = './caryn.png'
 let moleCounter = 0
 let scoreSelector = document.querySelector("#score")
 let container = document.querySelector(".container")
@@ -19,6 +21,8 @@ let form = document.querySelector(".form")
 let userId= 0;
 let names =[]
 let hightScore = 0;
+let names = [] ;
+let ul = document.querySelector(".list")
 
 
 //start game
@@ -26,7 +30,7 @@ let timerInterval;
 let interval;
 function startGame() {
   scoreSelector.textContent = "0"
-  interval = setInterval(function(){ molePopUp() }, 1000);//mole timing
+  interval = setInterval(function(){ molePopUp() }, 3000);//mole timing
   timerInterval = setInterval(function(){ timerCountdown() }, 1000);// game countdown
 };
 
@@ -104,10 +108,10 @@ function determineSpeed() {
 
 //listen for mole click
 container.addEventListener("click", function(e) {
-  if (document.querySelector('.mole')) {
-      scoreSelector.innerHTML = parseInt(scoreSelector.textContent) + 1
-      removeMole()
-      clickableMole = false
+  if (e.target.className === "mole" && clickableMole) {
+    scoreSelector.innerHTML = parseInt(scoreSelector.textContent) + 1
+    removeMole()
+    clickableMole = false
   }
 });
 
@@ -131,6 +135,7 @@ function renderEndGame() {
   `
   EndGameModalContent.insertAdjacentHTML('beforeend', endGameHTML)
 };
+
 //event listener for both play again button and leaderboard button
 document.addEventListener('click', function(event) {
   if (event.target.id === "play-again-button") { //if user hits play-again, starts a new game
@@ -143,6 +148,7 @@ document.addEventListener('click', function(event) {
   }
 });
 
+// <<<<<<< soufiane
 let ul = document.querySelector(".list")
 
 // /** ~~~~~~~~~~~~~~~Leaderboard Modal~~~~~~~~~~~~~~~ */
@@ -153,6 +159,14 @@ let ul = document.querySelector(".list")
 //    ul.innerHTML += `<p>${name.username} : ${name.score}</p>`
 //    }
 //  }
+// =======
+/** ~~~~~~~~~~~~~~~Leaderboard Modal~~~~~~~~~~~~~~~ */
+//  function createList() {
+//    for (const name of names) {
+//    ul.innerHTML += `<li>${name}</li>`
+//    }
+//  }
+// >>>>>>> master
 function renderLeaderboard() {
   // console.log(names)
   leaderboardModal.style.display = "block"
@@ -180,9 +194,8 @@ function toggleStartButton() {
 function renderMole() {
   clickableMole = true
   randomHole()
-  
   let moleHTML = `
-    <img class="mole" src="${moleImageURL}">
+    <img class="mole" src="${pickMole()}">
     <img class="image-hole-top" src="whack-a-mole-top.png">
     `
     randomHole().insertAdjacentHTML('beforeend', moleHTML)
@@ -196,7 +209,12 @@ function randomHole() {
   return document.querySelector(`[data-id="${holeID}"]`)
 };
 
-//function for randomMole
+//function for pickMole
+function pickMole() {
+  moleArray = [moleImageURL, moleImageURL2, moleImageURL3]
+  let moleIDIndex = Math.floor(Math.random() * 3)
+  return moleArray[moleIDIndex]
+}
 
 //remove mole
 function removeMole() {

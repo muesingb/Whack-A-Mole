@@ -13,29 +13,24 @@
     overflow: hidden;
     position: relative;
     text-align: center;
-
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     width: 100vw; 
+    cursor: url('./../red\ darkness\ final.png'), auto;
 }
 
 .hole {
     padding: 30px;
-    background-color: #98C312;
+    background-color: #98C34F;
     overflow:hidden;
-
     height: 210px;
     width: 220px;
     /* border: 1px solid red; */
-    /* border-radius: 50%; */
     flex-basis: 30vw;
-    /* margin: 1vw; */
-
     display: flex;
     align-items: center;
     z-index: 1;
-
     background-image: url('./../whackamole\ background.png');
     background-repeat: no-repeat;
     background-position: center;
@@ -72,7 +67,6 @@
     margin-top: -35%;
     width: 150px;
     position: relative;
-
     right: 130%;
     z-index: 0;
 }
@@ -83,7 +77,6 @@
         margin-top: 100%;
         /* height: 100%;  */
     }
-
     to {
         margin-top: -40%;
         /* height: 100%; */

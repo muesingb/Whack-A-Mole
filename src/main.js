@@ -1,4 +1,4 @@
-let moleImageURL = "https://image.shutterstock.com/image-vector/cartoon-cute-mole-260nw-274323440.jpg"
+let moleImageURL = './xxRedDarknessxx\ 2.png'
 let moleCounter = 0
 let scoreSelector = document.querySelector("#score")
 let container = document.querySelector(".container")
@@ -108,10 +108,10 @@ function determineSpeed() {
 
 //listen for mole click
 container.addEventListener("click", function(e) {
-  if (e.target.className === "mole" && clickableMole) {
-    scoreSelector.innerHTML = parseInt(scoreSelector.textContent) + 1
-    removeMole()
-    clickableMole = false
+  if (document.querySelector('.mole')) {
+      scoreSelector.innerHTML = parseInt(scoreSelector.textContent) + 1
+      removeMole()
+      clickableMole = false
   }
 });
 
@@ -169,7 +169,8 @@ function renderMole() {
   randomHole()
   
   let moleHTML = `
-    <img class="mole" src=${moleImageURL}>
+    <img class="mole" src="${moleImageURL}">
+    <img class="image-hole-top" src="whack-a-mole-top.png">
     `
     randomHole().insertAdjacentHTML('beforeend', moleHTML)
 
@@ -182,9 +183,12 @@ function randomHole() {
   return document.querySelector(`[data-id="${holeID}"]`)
 };
 
+//function for randomMole
+
 //remove mole
 function removeMole() {
   document.querySelector('.mole').remove()
+  document.querySelector('.image-hole-top').remove()
 };
 
 //show or hide start button

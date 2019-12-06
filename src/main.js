@@ -1,4 +1,4 @@
-let moleImageURL = "https://image.shutterstock.com/image-vector/cartoon-cute-mole-260nw-274323440.jpg"
+let moleImageURL = './xxRedDarknessxx\ 2.png'
 let moleCounter = 0
 let scoreSelector = document.querySelector("#score")
 let container = document.querySelector(".container")
@@ -16,20 +16,10 @@ let HomeScreenModalContent = document.querySelector("#HomeScreenModalContent")
 let leaderboardModalContent = document.querySelector("#leaderboardModalContent")
 let gameInfo = document.querySelector('#info')
 let form = document.querySelector(".form")
-let homeS = document.querySelector("#HomeScreenModal")
 let userId= 0;
 let names = [] ;
 
 
-
-
-
-//fetch get request to rails api
-fetch('http://localhost:3000/users')
-  .then(response => response.json())
-  .then(data => {
-    // console.log(data)
-  });
 
 //start game
 let timerInterval;
@@ -112,10 +102,10 @@ function determineSpeed() {
 
 //listen for mole click
 container.addEventListener("click", function(e) {
-  if (e.target.className === "mole" && clickableMole) {
-    scoreSelector.innerHTML = parseInt(scoreSelector.textContent) + 1
-    removeMole()
-    clickableMole = false
+  if (document.querySelector('.mole')) {
+      scoreSelector.innerHTML = parseInt(scoreSelector.textContent) + 1
+      removeMole()
+      clickableMole = false
   }
 });
 
@@ -126,43 +116,30 @@ startButton.addEventListener('click', function(event) {
   toggleStartButton()
 });
 
-/** ~~~~~~~~~~~~~Home Screen Modal ~~~~~~~~~~~~ */
-document.addEventListener('click', function(event) {
-  if (event.target.className === "submit") {
-      HomeScreenModal.style.display = "none";
-      HomeScreenModalContent.innerHTML = "";
-  }
-})
-
 /** ~~~~~~~~~~~~~End Game Modal ~~~~~~~~~~~~~~*/
 function renderEndGame() {
   EndGameModal.style.display = "block"
   EndGameModalContent.innerHTML = ""
   let endGameHTML = `
-    <h1>Thanks for Playing!</h1>
-    <p>Score: ${parseInt(scoreSelector.textContent)}</p>
-    <p>High Score:</p>
+    <h1 id="">Thanks for Playing!</h1>
+    <p>Score: <span style="font-weight: bold;">${parseInt(scoreSelector.textContent)}</span></p>
+    <p>Your High Score:<span style="font-weight: bold;"></span></p>
     <button class="button" id="play-again-button">Play Again?</button>
     <button class="button" id="leaderboard-button">Leaderboard</button>
   `
   EndGameModalContent.insertAdjacentHTML('beforeend', endGameHTML)
-
-  
-  document.addEventListener('click', function(event) {
-    //if user clicks off of modal, it closes the modal
-    // if (event.target == EndGameModal) {
-    //   modal.style.display = "none";
-    //   toggleStartButton();
-    // } else
-    if (event.target.id === "play-again-button") { //if user hits play-again, starts a new game
-        EndGameModal.style.display = "none";
-        startGame()
-    } else if (event.target.id === "leaderboard-button") {
-      EndGameModal.style.display = "none";
-      renderLeaderboard()
-    }
-  })
 };
+//event listener for both play again button and leaderboard button
+document.addEventListener('click', function(event) {
+  if (event.target.id === "play-again-button") { //if user hits play-again, starts a new game
+      EndGameModal.style.display = "none";
+      leaderboardModal.style.display = "none";
+      startGame()
+  } else if (event.target.id === "leaderboard-button") {
+    EndGameModal.style.display = "none";
+    renderLeaderboard()
+  }
+});
 
 let ul = document.querySelector(".list")
 /** ~~~~~~~~~~~~~~~Leaderboard Modal~~~~~~~~~~~~~~~ */
@@ -175,13 +152,14 @@ function renderLeaderboard() {
   console.log(names)
   leaderboardModal.style.display = "block"
   createList()
-  
   document.addEventListener('click', function(event) {
     if (event.target.className === "button") { //if user hits play-again, starts a new game
         leaderboardModal.style.display = "none";
         startGame()
     }
   })
+
+
 };
 
 /** ~~~~~~~~~~~~~~~HELPER FUNCTIONS~~~~~~~~~~~~~~~~ */
@@ -201,7 +179,8 @@ function renderMole() {
   randomHole()
   
   let moleHTML = `
-    <img class="mole" src=${moleImageURL}>
+    <img class="mole" src="${moleImageURL}">
+    <img class="image-hole-top" src="whack-a-mole-top.png">
     `
     randomHole().insertAdjacentHTML('beforeend', moleHTML)
 
@@ -214,9 +193,12 @@ function randomHole() {
   return document.querySelector(`[data-id="${holeID}"]`)
 };
 
+//function for randomMole
+
 //remove mole
 function removeMole() {
   document.querySelector('.mole').remove()
+  document.querySelector('.image-hole-top').remove()
 };
 
 //show or hide start button
@@ -231,6 +213,13 @@ function toggleStartButton() {
 //show hidden timer and score information
 function InfoToggleOn() {
   gameInfo.style.display = "block"
+};
+
+//function to clear home screen model
+function clearHomeScreenModal() {
+  startButton.style.display = "block";
+  HomeScreenModal.style.display = "none";
+  HomeScreenModalContent.innerHTML = "";
 }
 
 //post request to create new user
@@ -249,7 +238,8 @@ form.addEventListener("submit", function(e) {
    .then(function(resp) {
      return resp.json();    })
    .then(function(data) {
-    homeS.remove()
+    toggleStartButton()
+    clearHomeScreenModal()
     userId = data.id
     username.innerHTML = e.target[0].value
    })

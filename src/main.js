@@ -1,4 +1,4 @@
-let moleImageURL = './xxRedDarknessxx\ 2.png'
+let moleImageURL = './red\ darkness\ final.png'
 let moleCounter = 0
 let scoreSelector = document.querySelector("#score")
 let container = document.querySelector(".container")
@@ -18,15 +18,14 @@ let gameInfo = document.querySelector('#info')
 let form = document.querySelector(".form")
 let userId= 0;
 let names = [] ;
-
-
+let ul = document.querySelector(".list")
 
 //start game
 let timerInterval;
 let interval;
 function startGame() {
   scoreSelector.textContent = "0"
-  interval = setInterval(function(){ molePopUp() }, 500);//mole timing
+  interval = setInterval(function(){ molePopUp() }, 3000);//mole timing
   timerInterval = setInterval(function(){ timerCountdown() }, 1000);// game countdown
 };
 
@@ -76,6 +75,7 @@ function endGame() {
   
     })
  }
+
 //timer countdown
 function timerCountdown() {
       let newTime;
@@ -102,10 +102,10 @@ function determineSpeed() {
 
 //listen for mole click
 container.addEventListener("click", function(e) {
-  if (document.querySelector('.mole')) {
-      scoreSelector.innerHTML = parseInt(scoreSelector.textContent) + 1
-      removeMole()
-      clickableMole = false
+  if (e.target.className === "mole" && clickableMole) {
+    scoreSelector.innerHTML = parseInt(scoreSelector.textContent) + 1
+    removeMole()
+    clickableMole = false
   }
 });
 
@@ -129,6 +129,7 @@ function renderEndGame() {
   `
   EndGameModalContent.insertAdjacentHTML('beforeend', endGameHTML)
 };
+
 //event listener for both play again button and leaderboard button
 document.addEventListener('click', function(event) {
   if (event.target.id === "play-again-button") { //if user hits play-again, starts a new game
@@ -141,7 +142,6 @@ document.addEventListener('click', function(event) {
   }
 });
 
-let ul = document.querySelector(".list")
 /** ~~~~~~~~~~~~~~~Leaderboard Modal~~~~~~~~~~~~~~~ */
  function createList() {
    for (const name of names) {
@@ -158,8 +158,6 @@ function renderLeaderboard() {
         startGame()
     }
   })
-
-
 };
 
 /** ~~~~~~~~~~~~~~~HELPER FUNCTIONS~~~~~~~~~~~~~~~~ */
@@ -177,7 +175,6 @@ function toggleStartButton() {
 function renderMole() {
   clickableMole = true
   randomHole()
-  
   let moleHTML = `
     <img class="mole" src="${moleImageURL}">
     <img class="image-hole-top" src="whack-a-mole-top.png">

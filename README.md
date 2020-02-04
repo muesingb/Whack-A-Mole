@@ -12,7 +12,7 @@ Technologies:
 <ul>
   <li />JavaScript
   <li />Ruby on Rails
-  <li />HTML/CSS/JS
+  <li />HTML/CSS
 </ul>
 
 ## Meta
